@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="style.css">
+    <title></title>
+  </head>
+  <body>
+  
+  <input type="button" value="Кнопка" name="d" OnClick="callback();">
+<script src="http://code.jquery.com/jquery-1.8.3.js"></script>
+<form></form>
+
+<script>
+var formData = [{"type":"text","label":"Test","req":1},{"type":"textarea","label":"123456789","req":0},{"type":"select","label":"Example","req":0,"choices":[{"label":"1","sel":0},{"label":"2","sel":0},{"label":"3","sel":0}]}];
+
+
+    createForm(formData);
+
+    function createForm(arr){
+        var $formTmp = $('<form></form>');
+
+        arr.forEach( function(obj, idx) {
+            var $fieldSet,
+                $selctOpts = $('<select name=""></select>'),
+                inputType = obj.type; 
+
+            switch (inputType){
+                case 'text':
+                    $fieldSet = $('<label for="">'+obj.label+'</label>');
+
+                    if ( obj.req === 1) {
+                        $fieldSet.append('<input type="text" required>');
+                    } else {
+                        $fieldSet.append('<input type="text">');
+                    }
+                    $formTmp.append($fieldSet, '<br />');
+                    break;
+                case 'textarea':
+                    $fieldSet = $('<label for="">'+obj.label+'</label><br /><textarea rows="4" cols="50"></textarea>');
+                    $formTmp.append($fieldSet, '<br />');
+                    break;
+                case 'select':
+                    $fieldSet = $('<label for=""></label>').text(obj.label);
+                    addOptions($selctOpts, obj.choices);                    
+                    $formTmp.append($fieldSet, $selctOpts, '<br />');
+                    break;
+                default:
+                    alert('There was no input type found.');
+                    break;
+            }               
+        });
+
+        // render to body.
+        $('body').append($formTmp);
+
+
+        // Loop for the select options.
+        function addOptions(elem, arr){
+            arr.forEach(function(obj){
+                elem.append('<option value="'+obj.sec+'">'+obj.label+'</option>');              
+            });
+        }
+    }
+</script>
+
+  </body>
+</html>
